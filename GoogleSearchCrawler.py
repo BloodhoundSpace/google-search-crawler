@@ -1,6 +1,7 @@
 import requests
 from urllib.parse import quote, unquote, urlparse
 from bs4 import BeautifulSoup
+from logger import logger
 
 class GoogleSearchCrawler():
   def __init__(self) -> None:
@@ -38,9 +39,11 @@ class GoogleSearchCrawler():
 
     return domain
 
-  def search(self, query: str, page = 1) -> list:
+  def search(self, query: str, page = 1):
     search_url = self._get_search_url(query, page)
     res = self._get_source(search_url)
+
+    logger.info(f'👀 {search_url}')
 
     soup = BeautifulSoup(res.text, 'html.parser')
     result_containers = soup.findAll('div', class_='Gx5Zad fP1Qef xpd EtOod pkphOe')
@@ -61,10 +64,11 @@ class GoogleSearchCrawler():
         domain = self._extract_domain(extracted_url)
         
         results.append({
-          'title': title,
-          'url': extracted_url,
           'domain': domain,
-          'des': des
+          'page': page,
+          'url': extracted_url,
+          'title': title,
+          'description': des
         })
 
     return results
