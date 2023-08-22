@@ -10,7 +10,7 @@ SEARCH_INPUT = 'Why orange cats are weird'
 RESULTS = []
 
 if __name__ == '__main__':
-  logger.info(f'🤖 Key word: {SEARCH_INPUT}')
+  logger.info(f'🤖 Keyword: {SEARCH_INPUT}')
   # Step 1: Crawl Data from Google Search
   crawler = GoogleSearchCrawler()
   while(START_PAGE <= END_PAGE):
