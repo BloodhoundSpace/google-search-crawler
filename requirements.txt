@@ -1,6 +1,6 @@
-request
-bs4
-coloredlogs
-pandas
-openpyxl
-xlsxwriter
+requests>=2.31.0
+bs4==0.0.1
+coloredlogs==15.0.1
+pandas==2.0.1
+openpyxl==3.1.2
+xlsxwriter==3.1.2

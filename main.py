@@ -2,10 +2,10 @@ from GoogleSearchCrawler import GoogleSearchCrawler
 from ExcelWriter import ExcelWriter
 from logger import logger
 
+SEARCH_INPUT = 'Why orange cats are weird'
+
 START_PAGE = 1
 END_PAGE = 2
-
-SEARCH_INPUT = 'Why orange cats are weird'
 
 RESULTS = []
 
