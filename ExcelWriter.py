@@ -6,7 +6,7 @@ class ExcelWriter():
     self.filename = filename + '.xlsx'
     self.sheet_name = 'Sheet1'
     self.engine = 'xlsxwriter'
-    self.desired_column_order = ['domain', 'page', 'url', 'title', 'description']
+    self.desired_column_order = ['domain', 'page', 'url', 'title', 'description', 'country']
 
   def save_to_excel(self, data) -> None:
     logger.info(f'🔧 Save to file {self.filename}')

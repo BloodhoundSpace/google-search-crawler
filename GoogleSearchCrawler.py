@@ -1,7 +1,9 @@
-import requests
 from urllib.parse import quote, unquote, urlparse
+import requests
 from bs4 import BeautifulSoup
+import whois
 from logger import logger
+from configs import crawler_configs
 
 class GoogleSearchCrawler():
   def __init__(self) -> None:
@@ -38,6 +40,15 @@ class GoogleSearchCrawler():
     domain = urlparse(url).netloc
 
     return domain
+  
+  def _get_country_from_domain(self, domain: str) -> str:
+    try:
+      domain_info = whois.whois(domain)
+      country = domain_info['country']
+      return country
+    except Exception as e:
+      logger.error('Error', e)
+      return ''
 
   def search(self, query: str, page = 1):
     search_url = self._get_search_url(query, page)
@@ -62,13 +73,16 @@ class GoogleSearchCrawler():
       
       if (title and extracted_url):
         domain = self._extract_domain(extracted_url)
+        country = '' if not crawler_configs['is_crawl_country'] \
+          else self._get_country_from_domain(domain)
         
         results.append({
           'domain': domain,
           'page': page,
           'url': extracted_url,
           'title': title,
-          'description': des
+          'description': des,
+          'country': country
         })
 
     return results
