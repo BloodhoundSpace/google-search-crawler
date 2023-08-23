@@ -2,7 +2,7 @@ from GoogleSearchCrawler import GoogleSearchCrawler
 from ExcelWriter import ExcelWriter
 from logger import logger
 
-SEARCH_INPUT = 'Why orange cats are weird'
+SEARCH_INPUT = 'Google search la gi'
 
 START_PAGE = 1
 END_PAGE = 2
