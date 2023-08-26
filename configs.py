@@ -4,3 +4,9 @@ CRAWLER_CONFIGS = {
   'end_page': 10,
   'is_crawl_country': False
 }
+
+IGNORE_SITES = [
+  'tiktok.com',
+  'facebook.com',
+  'instagram.com'
+]

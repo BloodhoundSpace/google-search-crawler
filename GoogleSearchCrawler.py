@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 import whois
 from logger import logger
-from configs import CRAWLER_CONFIGS
+from configs import CRAWLER_CONFIGS, IGNORE_SITES
 
 class GoogleSearchCrawler():
   def __init__(self) -> None:
@@ -49,6 +49,10 @@ class GoogleSearchCrawler():
     except Exception as e:
       logger.error('Error', e)
       return ''
+    
+  def _is_site_ignore(self, domain: str) -> bool:
+    removed_www_domain = domain.replace('www.', '', 1)
+    return removed_www_domain in IGNORE_SITES
 
   def search(self, query: str, page = 1):
     search_url = self._get_search_url(query, page)
@@ -73,17 +77,19 @@ class GoogleSearchCrawler():
       
       if (title and extracted_url):
         domain = self._extract_domain(extracted_url)
-        country = '' if not CRAWLER_CONFIGS['is_crawl_country'] \
-          else self._get_country_from_domain(domain)
-        
-        results.append({
-          'domain': domain,
-          'page': page,
-          'url': extracted_url,
-          'title': title,
-          'description': des,
-          'country': country
-        })
+        is_site_ignore = self._is_site_ignore(domain)
+        if (not is_site_ignore):
+          country = '' if not CRAWLER_CONFIGS['is_crawl_country'] \
+            else self._get_country_from_domain(domain)
+          
+          results.append({
+            'domain': domain,
+            'page': page,
+            'url': extracted_url,
+            'title': title,
+            'description': des,
+            'country': country
+          })
 
     return results
   
