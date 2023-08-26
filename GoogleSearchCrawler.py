@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 import whois
 from logger import logger
-from configs import crawler_configs
+from configs import CRAWLER_CONFIGS
 
 class GoogleSearchCrawler():
   def __init__(self) -> None:
@@ -73,7 +73,7 @@ class GoogleSearchCrawler():
       
       if (title and extracted_url):
         domain = self._extract_domain(extracted_url)
-        country = '' if not crawler_configs['is_crawl_country'] \
+        country = '' if not CRAWLER_CONFIGS['is_crawl_country'] \
           else self._get_country_from_domain(domain)
         
         results.append({
