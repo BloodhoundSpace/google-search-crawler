@@ -6,7 +6,7 @@ class ExcelWriter():
     self.filename = filename + '.xlsx'
     self.sheet_name = 'Sheet1'
     self.engine = 'xlsxwriter'
-    self.desired_column_order = ['domain', 'page', 'url', 'title', 'description', 'country']
+    self.desired_column_order = ['domain', 'page', 'url', 'title', 'description', 'country', 'email']
 
   def save_to_excel(self, data) -> None:
     logger.info(f'🔧 Save to file {self.filename}')
@@ -41,7 +41,8 @@ class ExcelWriter():
       'page': 4,
       'url': 45,
       'title': 45,
-      'description': 60
+      'description': 60,
+      'email': 50
     }
     
     for column_name, max_width in column_widths.items():

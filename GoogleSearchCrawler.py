@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 import whois
 from logger import logger
 from configs import CRAWLER_CONFIGS, IGNORE_SITES
+from HtmlExtractor import HtmlExtractor
 
 class GoogleSearchCrawler():
   def __init__(self) -> None:
@@ -47,7 +48,7 @@ class GoogleSearchCrawler():
       country = domain_info['country']
       return country
     except Exception as e:
-      logger.error('Error', e)
+      logger.error(f'[ERROR {domain}]: {e}')
       return ''
     
   def _is_site_ignore(self, domain: str) -> bool:
@@ -79,8 +80,13 @@ class GoogleSearchCrawler():
         domain = self._extract_domain(extracted_url)
         is_site_ignore = self._is_site_ignore(domain)
         if (not is_site_ignore):
-          country = '' if not CRAWLER_CONFIGS['is_crawl_country'] \
-            else self._get_country_from_domain(domain)
+          country = ''
+          if CRAWLER_CONFIGS['is_crawl_country']:
+            country = self._get_country_from_domain(domain)
+          email_addresses = ''
+          if CRAWLER_CONFIGS['is_crawl_email']:
+            html_extractor = HtmlExtractor(extracted_url)
+            email_addresses = html_extractor.get_email()
           
           results.append({
             'domain': domain,
@@ -88,7 +94,8 @@ class GoogleSearchCrawler():
             'url': extracted_url,
             'title': title,
             'description': des,
-            'country': country
+            'country': country,
+            'email': email_addresses
           })
 
     return results
