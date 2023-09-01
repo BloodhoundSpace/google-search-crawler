@@ -1,7 +1,7 @@
 CRAWLER_CONFIGS = {
-  'search_input': 'Why orange cats are weird',
+  'search_input': 'Boozy Studio',
   'start_page': 1,
-  'end_page': 2,
+  'end_page': 1,
   'is_crawl_country': False,
   'is_crawl_email': False
 }
