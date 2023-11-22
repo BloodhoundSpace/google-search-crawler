@@ -1,5 +1,7 @@
 # Google Search Crawler
 
+Search with maximum results and results from everywhere around the world.
+
 ![organic-result](./image/organic-result.png)
 
 ## How to run
